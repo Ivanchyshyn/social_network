@@ -31,10 +31,6 @@ class User(db.Model):
             return False
         return check_password_hash(self.password, password)
 
-    @property
-    def short_name(self):
-        return '{} {}'.format(self.first_name or '', self.last_name or '').strip()
-
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

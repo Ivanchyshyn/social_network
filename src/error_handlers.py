@@ -16,6 +16,18 @@ def handle_api_exception(e):
     return Response(json.dumps(data), content_type='application/json')
 
 
+def handle_marshmallow_exception(e):
+    msg = e.messages
+    logger.info('Marshmallow error:\n %s', msg)
+    data = get_api_result_structure()
+
+    if not msg:
+        msg = 'Something went wrong'
+
+    set_error_result(data, msg=msg)
+    return Response(json.dumps(data), content_type='application/json')
+
+
 def handle_http_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     logger.info('Http Exception', e.description)
