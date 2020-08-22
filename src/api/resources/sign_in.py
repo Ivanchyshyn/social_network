@@ -7,11 +7,11 @@ from src.models import User
 from src.serializers import UserSchema
 
 
-class SignIn(Resource):
+class SignInView(Resource):
     def post(self):
         result = get_api_result_structure()
-        data = request.get_json(force=True, silent=True) or {}
-        email, password = data.get('email'), data.get('password')
+        post_data = request.get_json(force=True, silent=True) or {}
+        email, password = post_data.get('email'), post_data.get('password')
 
         user = User.query.filter_by(email=email).first()
         if not user:

@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def handle_api_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
-    logger.info('Api Exception', e.msg)
+    logger.info('Api Exception: %s', e.msg)
 
     data = get_api_result_structure()
     set_error_result(data, msg=e.msg)
@@ -18,7 +18,7 @@ def handle_api_exception(e):
 
 def handle_marshmallow_exception(e):
     msg = e.messages
-    logger.info('Marshmallow error:\n %s', msg)
+    logger.info('Marshmallow error:\n%s', msg)
     data = get_api_result_structure()
 
     if not msg:
@@ -30,7 +30,7 @@ def handle_marshmallow_exception(e):
 
 def handle_http_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
-    logger.info('Http Exception', e.description)
+    logger.info('Http Exception:\n%s', e.description)
 
     response = e.get_response()
     data = get_api_result_structure()

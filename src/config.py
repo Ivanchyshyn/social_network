@@ -1,4 +1,5 @@
 import datetime
+import logging.config
 import os
 
 from dotenv import load_dotenv
@@ -26,3 +27,35 @@ class Config:
     JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(seconds=_refresh_expire)
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+
+    # Logger
+    logging.config.dictConfig(
+        {
+            'version': 1,
+            'formatters': {
+                'brief': {'format': '%(message)s'},
+                'default': {'format': '%(asctime)s %(levelname)-8s %(name)-15s %(message)s'}
+            },
+            'handlers': {
+                'console': {
+                    'class': 'logging.StreamHandler',
+                    'formatter': 'brief',
+                    'level': 'INFO',
+                },
+                'file': {
+                    'class': 'logging.handlers.RotatingFileHandler',
+                    'formatter': 'default',
+                    'level': 'ERROR',
+                    'filename': 'error.log',
+                    'maxBytes': 1024 * 1024,  # 1 MB
+                    'backupCount': 3,
+                }
+            },
+            'loggers': {
+                'src': {
+                    'handlers': ['console', 'file'],
+                    'level': 'INFO',
+                },
+            }
+        }
+    )

@@ -1,8 +1,8 @@
 """token
 
-Revision ID: 6ca8481b223d
-Revises: 92c08f279640
-Create Date: 2020-08-20 16:23:19.978203
+Revision ID: 5efe586cbefe
+Revises: 2cef7ae19ffa
+Create Date: 2020-08-22 13:30:54.158486
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6ca8481b223d'
-down_revision = '92c08f279640'
+revision = '5efe586cbefe'
+down_revision = '2cef7ae19ffa'
 branch_labels = None
 depends_on = None
 

@@ -34,9 +34,6 @@ def create_access_refresh_tokens(identity):
 
 
 def add_tokens_to_database(access_token, refresh_token):
-    if not access_token or not refresh_token:
-        return
-
     access_db = _add_token_to_database(access_token)
     refresh_db = _add_token_to_database(refresh_token)
 

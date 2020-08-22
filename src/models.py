@@ -42,12 +42,17 @@ class Post(db.Model):
     author = db.relationship('User', backref=db.backref('posts', lazy='dynamic'))
     users_liked = db.relationship('User', secondary='user_post_likes', lazy='dynamic')
 
+    @property
+    def users_liked_count(self):
+        return self.users_liked.count()
+
 
 class UserPostLikes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'))
-    count = db.Column(db.Integer, default=0, nullable=False)
+
+    __table_args__ = (db.UniqueConstraint('user_id', 'post_id'),)
 
 
 class Token(db.Model):

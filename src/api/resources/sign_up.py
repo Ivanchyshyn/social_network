@@ -8,11 +8,11 @@ from src.models import User
 from src.serializers import UserSchema
 
 
-class SignUp(Resource):
+class SignUpView(Resource):
     def post(self):
         result = get_api_result_structure()
-        data = request.get_json(force=True, silent=True) or {}
-        valid_data = UserSchema().load(data)
+        post_data = request.get_json(force=True, silent=True) or {}
+        valid_data = UserSchema().load(post_data)
 
         email, password = valid_data.pop('email'), valid_data.pop('password')
         if User.query.filter_by(email=email).first():
