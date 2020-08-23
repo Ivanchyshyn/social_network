@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from flask import request
 from flask_restful import Resource
 
+from src import db
 from src.api.utils import get_api_result_structure, create_access_refresh_tokens
 from src.exceptions import ApiException
 from src.models import User
@@ -16,6 +19,9 @@ class SignInView(Resource):
         user = User.query.filter_by(email=email).first()
         if not user:
             raise ApiException("User not found")
+
+        user.last_login = datetime.utcnow()
+        db.session.commit()
 
         data = create_access_refresh_tokens(identity=user)
         data['user'] = UserSchema().dump(user)

@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+import datetime as dt
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -17,8 +17,8 @@ class User(db.Model):
     password = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
 
-    last_login = db.Column(db.TIMESTAMP, default=datetime.utcnow)
-    last_request = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    last_login = db.Column(db.TIMESTAMP, default=dt.datetime.utcnow)
+    last_request = db.Column(db.TIMESTAMP, default=dt.datetime.utcnow)
 
     def __repr__(self):
         return '<User {}>'.format(self.email)
@@ -51,6 +51,8 @@ class UserPostLikes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'))
+
+    created = db.Column(db.Date, default=dt.date.today)
 
     __table_args__ = (db.UniqueConstraint('user_id', 'post_id'),)
 

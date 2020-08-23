@@ -1,10 +1,11 @@
 from flask import request
-from flask_jwt_extended import jwt_required, current_user
+from flask_jwt_extended import current_user, jwt_required
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import StaleDataError
 
 from src import db
+from src.api.decorators import user_last_request
 from src.api.utils import get_api_result_structure
 from src.exceptions import ApiException
 from src.models import Post
@@ -12,7 +13,8 @@ from src.serializers import PostSchema
 
 
 class PostView(Resource):
-    method_decorators = [jwt_required]
+    # Decorators are called in reverse, so 'jwt_required' will be executed first
+    method_decorators = [user_last_request, jwt_required]
 
     def get(self, post_id=None):
         result = get_api_result_structure()
