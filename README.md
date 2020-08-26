@@ -17,3 +17,11 @@ python -m pip install -r requirements.txt
 ```
 ./initialize_database.sh
 ```
+
+### Bot
+Bot is a script, that creates users, posts and likes them.\
+Bot configuration is in <i>bot_config.ini</i>.\
+To run the bot, start the API server and execute this command:
+```
+python bot.py
+```
